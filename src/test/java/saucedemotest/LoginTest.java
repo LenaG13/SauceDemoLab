@@ -10,13 +10,13 @@ public class LoginTest extends BaseTest {
     @BeforeMethod
     public void openLoginPage() {
         loginPage.open();
-        Assert.assertTrue(loginPage.isPageLoaded(), "Login page was not loaded");
+        Assert.assertTrue(loginPage.isPageLoadedWait(), "Login page was not loaded");
     }
 
     @Test
     public void validCredentialsLoginTest() {
         loginPage.login(USERNAME, PASSWORD);
-        Assert.assertTrue(catalogPage.isPageLoaded(), "Catalog page was not loaded");
+        Assert.assertTrue(catalogPage.isPageLoadedWait(), "Catalog page was not loaded");
     }
 
     @Test

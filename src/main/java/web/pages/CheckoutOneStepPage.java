@@ -2,14 +2,15 @@ package web.pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class CheckoutOneStepPage extends BasePage {
 
     public static final String BASE_URL = "https://www.saucedemo.com/checkout-step-one.html";
     private static final By TITLE_LOCATOR = By.xpath("//span[@class='title' and text()='Checkout: Your Information']");
 
-    public CheckoutOneStepPage(WebDriver driver) {
-        super(driver);
+    public CheckoutOneStepPage(WebDriver driver, WebDriverWait wait) {
+        super(driver, wait);
         this.baseUrl = BASE_URL;
         this.basePageElementId = TITLE_LOCATOR;
     }
@@ -20,6 +21,9 @@ public class CheckoutOneStepPage extends BasePage {
     private static final By CONTINUE_BUTTON = By.id("continue");
     private static final By CANCEL_BUTTON = By.id("cancel");
     private static final By ERROR_TEXT_MESSAGE = By.tagName("h3");
+    public static final String FIRSTNAME_TEXT_FIELD_PLACEHOLDER = "First Name";
+    public static final String LASTNAME_TEXT_FIELD_PLACEHOLDER = "Last Name";
+    public static final String POSTCODE_TEXT_FIELD_PLACEHOLDER = "Zip/Postal Code";
 
     public void fillFormCheckoutStepOne(String firstname, String lastname, String zipcode) {
         driver.findElement(FIRST_NAME_LOCATOR).sendKeys(firstname);

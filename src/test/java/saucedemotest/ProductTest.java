@@ -11,18 +11,23 @@ public class ProductTest extends BaseTest {
     public static final String TEST_PRODUCT_TITLE2 = "Sauce Labs Backpack";
     public static final String ADD_TO_CART_BUTTON = "ADD TO CART";
     public static final String REMOVE_BUTTON = "REMOVE";
+    public static String price = "$29.99";
+    private String info = "carry.allTheThings() with the sleek, streamlined Sly Pack that melds uncompromising style with unequaled laptop and tablet protection.";
 
     @BeforeMethod
     private void login() {
         loginPage.open();
-        Assert.assertTrue(loginPage.isPageLoaded(), "Login page was not loaded");
+        Assert.assertTrue(loginPage.isPageLoadedWait(), "Login page was not loaded");
         loginPage.login(USERNAME, PASSWORD);
-        Assert.assertTrue(catalogPage.isPageLoaded(), "Catalog page was not loaded");
+        Assert.assertTrue(catalogPage.isPageLoadedWait(), "Catalog page was not loaded");
     }
 
     @Test
-    public void checkImageProductTest() {
-        Assert.assertTrue(catalogPage.productImg(TEST_PRODUCT_TITLE2), "IMG of the product was not displayed");
+    public void checkProductElementsTest() {
+        Assert.assertEquals(catalogPage.getProductTitle(TEST_PRODUCT_TITLE2), ADD_TO_CART_BUTTON, "The button ADD_TO_CART was not correct");
+        Assert.assertEquals(catalogPage.productPrice(TEST_PRODUCT_TITLE2), price, "Price of the product was not correct");
+        Assert.assertEquals(catalogPage.productInfo(TEST_PRODUCT_TITLE2), info, "Information of the product was not correct");
+        Assert.assertTrue(catalogPage.productImg(TEST_PRODUCT_TITLE2), "Image of the product was not displayed");
     }
 
     @Test
@@ -47,16 +52,11 @@ public class ProductTest extends BaseTest {
     }
 
     @Test
-    public void addProductToCartTest() {
+    public void addRemoveProductToCartTest() {
         catalogPage.addProductToCart(TEST_PRODUCT_TITLE);
         cartPage.open();
-        cartPage.isPageLoaded();
+        cartPage.isPageLoadedWait();
         Assert.assertEquals(cartPage.findProductByNameInCard(TEST_PRODUCT_TITLE), TEST_PRODUCT_TITLE, "Selected product is not in the cart");
-    }
-
-    @Test
-    public void removeAddedProductTest(){
-        addProductToCartTest();
         cartPage.removeProduct();
         Assert.assertTrue(cartPage.isCartEmpty(), "Product was not removed");
     }
@@ -64,23 +64,7 @@ public class ProductTest extends BaseTest {
     @Test
     public void logoutTest() {
         catalogPage.logout();
-        Assert.assertTrue(loginPage.isPageLoaded(), "User cannot logout");
-    }
-
-    @Test
-    public void purchaseProduct() {
-        catalogPage.addProductToCart(TEST_PRODUCT_TITLE2);
-        cartPage.open();
-        cartPage.isPageLoaded();
-        cartPage.clickContinueShopping();
-        catalogPage.addProductToCart(TEST_PRODUCT_TITLE2);
-        cartPage.open();
-        cartPage.isPageLoaded();
-        cartPage.clickCheckoutButton();
-        checkoutOneStepPage.fillFormCheckoutStepOne(FIRST_NAME,LAST_NAME,ZIP_CODE);
-        checkoutTwoStepPage.clickFinishButton();
-        checkoutCompletePage.clickBackHomeButton();
-        Assert.assertTrue(catalogPage.isPageLoaded(), "Catalog was not loaded");
+        Assert.assertTrue(loginPage.isPageLoadedWait(), "User cannot logout");
     }
 
 }

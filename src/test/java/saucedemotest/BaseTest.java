@@ -3,6 +3,7 @@ package saucedemotest;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import web.pages.*;
@@ -12,6 +13,7 @@ import java.time.Duration;
 public class BaseTest {
 
     protected WebDriver driver;
+    protected WebDriverWait wait;
     protected LoginPage loginPage;
     protected CatalogPage catalogPage;
     protected CartPage cartPage;
@@ -34,13 +36,15 @@ public class BaseTest {
         chromeOptions.addArguments("--ignore-popup-blocking");
         chromeOptions.addArguments("--ignore-certificate-errors");
         driver = new ChromeDriver(chromeOptions);
-        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
-        loginPage = new LoginPage(driver);
-        catalogPage = new CatalogPage(driver);
-        cartPage = new CartPage(driver);
-        checkoutOneStepPage = new CheckoutOneStepPage(driver);
-        checkoutTwoStepPage = new CheckoutTwoStepPage(driver);
-        checkoutCompletePage = new CheckoutCompletePage(driver);
+        //driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(3));
+        wait = new WebDriverWait(driver, Duration.ofSeconds(3));
+        loginPage = new LoginPage(driver, wait);
+        catalogPage = new CatalogPage(driver, wait);
+        cartPage = new CartPage(driver, wait);
+        checkoutOneStepPage = new CheckoutOneStepPage(driver, wait);
+        checkoutTwoStepPage = new CheckoutTwoStepPage(driver, wait);
+        checkoutCompletePage = new CheckoutCompletePage(driver, wait);
+
     }
 
     @AfterClass(alwaysRun = true)
