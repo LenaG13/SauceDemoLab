@@ -2,14 +2,16 @@ package web.pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class CatalogPage extends BasePage {
 
     public static final String BASE_URL = "https://www.saucedemo.com/inventory.html";
     private static final By TITLE_LOCATOR = By.xpath("//span[@class='title' and text()='Products']");
 
-    public CatalogPage(WebDriver driver) {
-        super(driver);
+    public CatalogPage(WebDriver driver, WebDriverWait wait) {
+        super(driver, wait);
         this.baseUrl = BASE_URL;
         this.basePageElementId = TITLE_LOCATOR;
     }
@@ -23,11 +25,11 @@ public class CatalogPage extends BasePage {
             "//div[contains(text(),'%s')]/ancestor::div[@class='inventory_item']//button";
     private static final String PRODUCT_XPATH_PATTERN_LINK =
             "//div[contains(text(),'%s')]/ancestor::div[@class='inventory_item_label']//a";
-    private static final String PRODUCT_XPATH_PATTERN_DESC =
+    private static final String PRODUCT_XPATH_PATTERN_INFO =
             "//div[contains(text(),'%s')]/ancestor::div[@class='inventory_item']//div[@class='inventory_item_desc']";
     private static final String PRODUCT_XPATH_PATTERN_PRICE =
             "//div[contains(text(),'%s')]/ancestor::div[@class='inventory_item']//div[@class='inventory_item_price']";
-    private static final String PRODUCT_IMG_XPATH_PATTERN =
+    private static final String PRODUCT_XPATH_PATTERN_IMG =
             "//div[contains(text(),'%s')]/ancestor::div[@class='inventory_item']//img";
 
     public void addProductToCart(String partialProductTitle) {
@@ -48,15 +50,11 @@ public class CatalogPage extends BasePage {
 
     public void logout() {
         driver.findElement(BURGER_MENU_ICON).click();
-        driver.findElement(LOGOUT_BUTTON).click();
+        wait.until(ExpectedConditions.visibilityOfElementLocated(LOGOUT_BUTTON)).click();
     }
 
-    public void openProductPage(String partialProductTitle) {
-        driver.findElement(By.xpath(String.format(PRODUCT_XPATH_PATTERN_LINK, partialProductTitle))).click();
-    }
-
-    public String productDesc(String partialProductTitle) {
-        return driver.findElement(By.xpath(String.format(PRODUCT_XPATH_PATTERN_DESC, partialProductTitle))).getText();
+    public String productInfo(String partialProductTitle) {
+        return driver.findElement(By.xpath(String.format(PRODUCT_XPATH_PATTERN_INFO, partialProductTitle))).getText();
     }
 
     public String productPrice(String partialProductTitle) {
@@ -72,7 +70,7 @@ public class CatalogPage extends BasePage {
     }
 
     public boolean productImg(String partialProductTitle) {
-        return driver.findElement(By.xpath(String.format(PRODUCT_IMG_XPATH_PATTERN, partialProductTitle))).isDisplayed();
+        return driver.findElement(By.xpath(String.format(PRODUCT_XPATH_PATTERN_IMG, partialProductTitle))).isDisplayed();
     }
 
 }

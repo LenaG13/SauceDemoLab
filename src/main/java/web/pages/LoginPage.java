@@ -2,13 +2,14 @@ package web.pages;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 public class LoginPage extends BasePage {
 
     public static final String BASE_URL = "https://www.saucedemo.com/";
 
-    public LoginPage(WebDriver driver) {
-        super(driver);
+    public LoginPage(WebDriver driver, WebDriverWait wait) {
+        super(driver, wait);
         this.baseUrl = BASE_URL;
         this.basePageElementId = LOGIN_BUTTON;
     }

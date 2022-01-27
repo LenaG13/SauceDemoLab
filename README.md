@@ -1,7 +1,5 @@
 # Page object practice. Saucedemo lab.
 
-Description
-
 
 ### Checklist
 
@@ -22,5 +20,8 @@ Description
 | Products | Checking product elements  | Success |
 | Shopping Cart | Going to cart | Success |
 | Shopping Cart | Remove product at the cart | Success |
+| Checkout | Displaying placeholder "First Name" in the field  | Success |
+| Checkout | Displaying placeholder "Last Name" in the field   | Success |
+| Checkout | Displaying placeholder "Zip/Postal Code" in the field   | Success |
 | Checkout | Go to next step by click to the button "Finish"  | Success |
 | Checkout | Go to the product list by click to the button "BackHome"  | Success |
